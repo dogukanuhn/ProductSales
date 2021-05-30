@@ -1,14 +1,8 @@
 ﻿using MediatR;
-using ProductSales.Application.Exceptions.User;
 using ProductSales.Domain.Abstract;
 using ProductSales.Domain.Abstract.Repositories;
 using ProductSales.Domain.Abstract.Services;
 using ProductSales.Domain.Models;
-using ProductSales.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,17 +18,17 @@ namespace ProductSales.Application.Payments.Events.Handler
             _paymentService = paymentService;
 
         }
-        public async  Task Handle(CreatePaymentNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(CreatePaymentNotification notification, CancellationToken cancellationToken)
         {
 
 
 
-            CustomerPayment customerPayment = new(notification.BasketCode,notification.Price, notification.PaidPrice,notification.CustomerCode,
-                notification.BasketItems,notification.BillingAddress,notification.ShippingAddress,notification.PaymentCard,notification.IP);
-             _paymentService.Create(customerPayment);
+            CustomerPayment customerPayment = new(notification.BasketCode, notification.Price, notification.PaidPrice, notification.CustomerCode,
+                notification.BasketItems, notification.BillingAddress, notification.ShippingAddress, notification.PaymentCard, notification.IP);
+            _paymentService.Create(customerPayment);
 
-            
-       
+
+
         }
     }
 }

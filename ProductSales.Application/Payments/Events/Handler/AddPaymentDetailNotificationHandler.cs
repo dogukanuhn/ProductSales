@@ -1,10 +1,6 @@
 ﻿using MediatR;
 using ProductSales.Domain.Abstract.Repositories;
 using ProductSales.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +9,7 @@ namespace ProductSales.Application.Payments.Events.Handler
     class AddPaymentDetailNotificationHandler : INotificationHandler<CreatePaymentNotification>
     {
         private readonly IPaymentRepository _paymentRepository;
-  
+
 
         public AddPaymentDetailNotificationHandler(IPaymentRepository paymentRepository, ICustomerRepository customerRepository)
         {
@@ -22,12 +18,12 @@ namespace ProductSales.Application.Payments.Events.Handler
 
         public async Task Handle(CreatePaymentNotification notification, CancellationToken cancellationToken)
         {
-            CustomerPayment customerPayment = new(notification.BasketCode,notification.Price,notification.PaidPrice,notification.CustomerCode,
+            CustomerPayment customerPayment = new(notification.BasketCode, notification.Price, notification.PaidPrice, notification.CustomerCode,
                 notification.BasketItems, notification.ShippingAddress, notification.ShippingAddress);
 
             await _paymentRepository.AddAsync(customerPayment, cancellationToken);
 
-            
+
         }
     }
 }

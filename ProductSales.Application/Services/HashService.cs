@@ -2,7 +2,7 @@
 
 namespace ProductSales.Application.Services
 {
-    public static class AuthenticationService
+    public static class HashService
     {
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

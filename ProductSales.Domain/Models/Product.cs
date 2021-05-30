@@ -9,7 +9,6 @@ namespace ProductSales.Domain.Models
     {
 
         [BsonRepresentation(BsonType.String)]
-        public Guid Code { get; set; }
         public string ProductName { get; set; }
         public int Qty { get; set; }
         public Price Pricing { get; set; }

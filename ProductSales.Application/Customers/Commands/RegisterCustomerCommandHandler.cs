@@ -39,7 +39,7 @@ namespace ProductSales.Application.Customers.Commands
         public async Task<Unit> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
         {
             var hashedIdentity = _cipherService.Encrypt(request.IdentityNumber);
-            AuthenticationService.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            HashService.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var customter = new Customer(request.FirstName, request.LastName, request.Email, hashedIdentity,
                 request.Address, _customerUniqunessChecker, passwordSalt, passwordHash);
 

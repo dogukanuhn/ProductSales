@@ -1,10 +1,7 @@
-﻿using MediatR;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using ProductSales.Domain.Abstract;
 using ProductSales.Domain.Concrete;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace ProductSales.Domain.Models
 {
@@ -17,7 +14,7 @@ namespace ProductSales.Domain.Models
 
 
 
-   
+
 
         protected static void CheckRule(IBusinessRule rule)
         {

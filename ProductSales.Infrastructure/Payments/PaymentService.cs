@@ -1,5 +1,4 @@
-﻿using Iyzipay;
-using Iyzipay.Model;
+﻿using Iyzipay.Model;
 using Iyzipay.Request;
 using Microsoft.Extensions.Options;
 using ProductSales.Domain.Abstract;
@@ -8,10 +7,8 @@ using ProductSales.Domain.Abstract.Services;
 using ProductSales.Domain.Exceptions;
 using ProductSales.Domain.Models;
 using ProductSales.Infrastructure.Config;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductSales.Infrastructure.Payments
@@ -73,7 +70,7 @@ namespace ProductSales.Infrastructure.Payments
                 basketItems.Add(new Iyzipay.Model.BasketItem()
                 {
                     Category1 = x.Category1,
-         
+
                     ItemType = BasketItemType.PHYSICAL.ToString(),
                     Price = x.Price.ToString().ChangeDecimal(),
                     Id = x.Sku.ToString(),
@@ -107,10 +104,10 @@ namespace ProductSales.Infrastructure.Payments
         }
 
 
-      
+
     }
 
-     static class ChangeExtension
+    static class ChangeExtension
     {
         public static string ChangeDecimal(this string str)
         {

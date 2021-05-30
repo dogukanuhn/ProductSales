@@ -35,7 +35,7 @@ namespace ProductSales.Application.Customers.Queries
             if (user is null)
                 throw new UserNotFoundException();
 
-            var passwordStatus = AuthenticationService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt);
+            var passwordStatus = HashService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt);
 
             if (passwordStatus == false)
                 throw new WrongPasswordException();

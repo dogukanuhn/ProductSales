@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ProductSales.Domain.Models
 {
-    public class CustomerPayment: BaseModel
+    public class CustomerPayment : BaseModel
     {
         public CustomerPayment(Guid basketCode, decimal price, decimal paidPrice, Guid customerCode, List<BasketItem> basketItems, Address billingAddress, Address shippingAddress)
         {

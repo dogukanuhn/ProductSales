@@ -16,7 +16,7 @@ namespace ProductSales.Application
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddCommandValidators(new[] { Assembly.GetExecutingAssembly() });
-
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IJwtHandler, JwtHandler>();
             services.AddTransient<ICipherService, CipherService>();
 

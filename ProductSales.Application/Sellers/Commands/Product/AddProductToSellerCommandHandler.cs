@@ -37,7 +37,7 @@ namespace ProductSales.Application.Sellers.Commands.Product
             if (product is null)
                 throw new ProductNotFoundException();
 
-            var sellerProduct = new SellerProduct(request.SellerCode, product.ProductName, request.Qty, product.CategoryName, request.Pricing, product.Unit,product.Sku);
+            var sellerProduct = new SellerProduct(request.SellerCode, product.ProductName, request.Qty, product.CategoryName, request.Pricing, product.Unit, product.Sku);
 
             await _sellerProductRepository.AddAsync(sellerProduct, cancellationToken);
 

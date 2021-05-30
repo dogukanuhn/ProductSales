@@ -10,7 +10,7 @@ namespace ProductSales.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class ProductController : ControllerBase
     {
         public readonly IMediator _mediator;
@@ -20,8 +20,8 @@ namespace ProductSales.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Domain.Abstract.IDataResult<System.Collections.Generic.List<Domain.Models.Product>>), StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetAll()
         {
@@ -33,7 +33,8 @@ namespace ProductSales.API.Controllers
         }
 
 
-        [HttpGet("getbyname")]
+        [AllowAnonymous]
+        [HttpGet("GetByName")]
         public async Task<IActionResult> GetByName([FromQuery] GetProductByNameQuery query)
         {
             var result = await _mediator.Send(query);
@@ -45,7 +46,7 @@ namespace ProductSales.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-        [Authorize]
+
         public async Task<IActionResult> Add([FromBody] AddProductCommand command)
         {
             await _mediator.Send(command);
@@ -54,6 +55,27 @@ namespace ProductSales.API.Controllers
             return Created("Created", string.Empty);
         }
 
+        [HttpDelete]
+
+        [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete([FromBody] DeleteProductCommand command)
+        {
+            await _mediator.Publish(command);
+
+            return Ok();
+        }
+
+
+        [HttpPut]
+        [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Updatea([FromBody] UpdateProductCommand command)
+        {
+            await _mediator.Publish(command);
+
+            return Ok();
+        }
 
 
     }

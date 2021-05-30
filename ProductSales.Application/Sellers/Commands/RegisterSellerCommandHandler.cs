@@ -35,7 +35,7 @@ namespace ProductSales.Application.Sellers.Commands
         public async Task<IResult> Handle(RegisterSellerCommand request, CancellationToken cancellationToken)
         {
 
-            AuthenticationService.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            HashService.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var seller = Seller.Register(request.FirstName, request.LastName, request.Phone
                 , request.Email, request.Brand, passwordSalt, passwordHash);
 
