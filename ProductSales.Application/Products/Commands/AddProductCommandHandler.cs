@@ -1,15 +1,17 @@
 ﻿using MediatR;
+using ProductSales.Application.Exceptions.Product;
 using ProductSales.Domain.Abstract;
 using ProductSales.Domain.Abstract.Repositories;
 using ProductSales.Domain.Concrete;
 using ProductSales.Domain.Models;
 using ProductSales.Domain.ValueObjects;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProductSales.Application.Products.Commands
 {
-    public class AddProductCommand : IRequest<IResult>
+    public class AddProductCommand : INotification
     {
         public string ProductName { get; set; }
         public short Qty { get; set; }
@@ -22,7 +24,7 @@ namespace ProductSales.Application.Products.Commands
 
 
     }
-    public class AddProductCommandHandler : IRequestHandler<AddProductCommand, IResult>
+    public class AddProductCommandHandler : INotificationHandler<AddProductCommand>
     {
         private readonly IProductRepository _productRepository;
         private readonly ISellerRepository _sellerRepository;
@@ -34,7 +36,7 @@ namespace ProductSales.Application.Products.Commands
             _productRepository = productRepository;
             _sellerRepository = sellerRepository;
         }
-        public async Task<IResult> Handle(AddProductCommand request, CancellationToken cancellationToken)
+        public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             var product = new Product(request.ProductName, request.Qty, request.CategoryName, request.Pricing, request.Unit);
 
@@ -42,9 +44,7 @@ namespace ProductSales.Application.Products.Commands
             var result = await _productRepository.AddAsync(product, cancellationToken);
 
             if (result != null)
-                return new Result(true, "Added Successfully");
-
-            return new Result(false, "Failure");
+                throw new Exception();
 
         }
     }

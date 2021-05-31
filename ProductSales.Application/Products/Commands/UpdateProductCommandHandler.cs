@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using ProductSales.Application.Dtos;
 using ProductSales.Application.Exceptions;
 using ProductSales.Domain.Abstract.Repositories;
@@ -14,12 +15,9 @@ namespace ProductSales.Application.Products.Commands
     public class UpdateProductCommandHandler : INotificationHandler<UpdateProductCommand>
     {
         private readonly IProductRepository _productRepository;
-
-
         public UpdateProductCommandHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
-
         }
         public async Task Handle(UpdateProductCommand notification, CancellationToken cancellationToken)
         {

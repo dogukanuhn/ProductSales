@@ -5,6 +5,7 @@ using ProductSales.Application.PipelineBehaviours;
 using ProductSales.Application.Services;
 using ProductSales.Application.Services.RuleChecker;
 using ProductSales.Domain.Abstract;
+using ProductSales.Domain.Abstract.Services;
 using ProductSales.Domain.BusinessRules;
 using System.Reflection;
 
@@ -19,6 +20,8 @@ namespace ProductSales.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IJwtHandler, JwtHandler>();
             services.AddTransient<ICipherService, CipherService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+
 
             services.AddScoped<ICustomerUniqunessChecker, CustomerUniqunessChecker>();
 

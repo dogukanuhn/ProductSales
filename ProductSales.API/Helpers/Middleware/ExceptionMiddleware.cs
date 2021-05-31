@@ -49,7 +49,7 @@ namespace ProductSales.API.Helpers.Middleware
                 Log.Error(ex, "Conflict");
                 var error = new ErrorModel
                 {
-                    Code = "00",
+                    Code = "409",
                     Message = ex.Message
                 };
 

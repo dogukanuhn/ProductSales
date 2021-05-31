@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductSales.API.Dtos;
 using ProductSales.Application.Customers.Commands;
-using ProductSales.Application.Customers.Queries;
+
 using ProductSales.Application.Sellers.Commands;
-using ProductSales.Application.Sellers.Queries;
+using ProductSales.Application.Services;
 using System.Threading.Tasks;
 
 namespace ProductSales.API.Controllers
@@ -15,22 +16,24 @@ namespace ProductSales.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public AuthController(IMediator mediator)
+        private readonly IAuthenticationService _auth;
+        public AuthController(IMediator mediator, IAuthenticationService auth)
         {
             _mediator = mediator;
+            _auth = auth;
         }
 
         #region SELLER
-        [AllowAnonymous]
+
         [HttpPost("seller/login")]
-        public async Task<IActionResult> SellerLogin([FromBody] LoginSellerQuery query)
+        public async Task<IActionResult> SellerLogin([FromBody] LoginDTO dto)
         {
-            var result = await _mediator.Send(query);
+            var result = await _auth.LoginSeller(dto.Email, dto.Password);
 
             return Ok(result);
         }
 
-        [AllowAnonymous]
+
         [HttpPost("seller/register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
@@ -44,18 +47,16 @@ namespace ProductSales.API.Controllers
         #endregion
 
 
-        #region SELLER
+        #region CUSTOMER
 
-        [AllowAnonymous]
+
         [HttpPost("customer/login")]
-        public async Task<IActionResult> CustomerLogin([FromBody] LoginCustomerQuery query)
+        public async Task<IActionResult> CustomerLogin([FromBody] LoginDTO dto)
         {
-            var result = await _mediator.Send(query);
-
+            var result = await _auth.LoginCustomer(dto.Email, dto.Password);
             return Ok(result);
         }
 
-        [AllowAnonymous]
         [HttpPost("customer/register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
@@ -67,5 +68,10 @@ namespace ProductSales.API.Controllers
         }
 
         #endregion
+
+
+
+
+
     }
 }

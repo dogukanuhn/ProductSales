@@ -46,7 +46,6 @@ namespace ProductSales.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-
         public async Task<IActionResult> Add([FromBody] AddProductCommand command)
         {
             await _mediator.Send(command);
@@ -56,7 +55,6 @@ namespace ProductSales.API.Controllers
         }
 
         [HttpDelete]
-
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Delete([FromBody] DeleteProductCommand command)
