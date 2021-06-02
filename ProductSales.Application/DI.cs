@@ -20,6 +20,8 @@ namespace ProductSales.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IJwtHandler, JwtHandler>();
             services.AddTransient<ICipherService, CipherService>();
+            services.AddTransient<IBusService, BusService>();
+
             services.AddTransient<IAuthenticationService, AuthenticationService>();
 
 

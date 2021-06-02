@@ -11,6 +11,7 @@ namespace ProductSales.Domain.Models
 {
     public class Seller : BaseModel, IUser
     {
+
         [BsonRepresentation(BsonType.String)]
         public Guid Code { get; set; }
         public string FirstName { get; set; }
@@ -23,6 +24,7 @@ namespace ProductSales.Domain.Models
         public byte[] PasswordHash { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+        public Notification Notifications { get; set; }
         public List<Address> ActiveAddress { get; set; }
         public Seller(string firstName, string lastName)
         {
@@ -44,7 +46,8 @@ namespace ProductSales.Domain.Models
                 PasswordSalt = salt,
                 PasswordHash = hash,
                 IsActive = true,
-                IsDeleted = false
+                IsDeleted = false,
+                Notifications = new Notification { Email=true,Sms=false}
             };
             return merchant;
         }
@@ -59,7 +62,6 @@ namespace ProductSales.Domain.Models
         public void DeactivateSeller()
         {
             IsActive = false;
-
         }
         public void AddActiveAddress(Address adress)
         {

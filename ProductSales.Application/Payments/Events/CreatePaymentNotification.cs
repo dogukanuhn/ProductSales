@@ -9,9 +9,9 @@ namespace ProductSales.Application.Payments.Events
     public class CreatePaymentNotification : INotification
     {
         public Guid BasketCode { get; set; }
+        public Guid SellerCode { get; set; }
         public decimal Price { get; set; }
         public decimal PaidPrice { get; set; }
-
         public PaymentCard PaymentCard { get; set; }
         public Guid CustomerCode { get; set; }
         public List<BasketItem> BasketItems { get; set; }

@@ -19,7 +19,7 @@ namespace ProductSales.Application.Payments.Events.Handler
         public async Task Handle(CreatePaymentNotification notification, CancellationToken cancellationToken)
         {
             CustomerPayment customerPayment = new(notification.BasketCode, notification.Price, notification.PaidPrice, notification.CustomerCode,
-                notification.BasketItems, notification.ShippingAddress, notification.ShippingAddress);
+                notification.BasketItems, notification.ShippingAddress, notification.ShippingAddress,notification.SellerCode);
 
             await _paymentRepository.AddAsync(customerPayment, cancellationToken);
 

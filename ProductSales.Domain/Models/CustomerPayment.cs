@@ -7,7 +7,7 @@ namespace ProductSales.Domain.Models
 {
     public class CustomerPayment : BaseModel
     {
-        public CustomerPayment(Guid basketCode, decimal price, decimal paidPrice, Guid customerCode, List<BasketItem> basketItems, Address billingAddress, Address shippingAddress)
+        public CustomerPayment(Guid basketCode, decimal price, decimal paidPrice, Guid customerCode, List<BasketItem> basketItems, Address billingAddress, Address shippingAddress, Guid sellerCode)
         {
             BasketCode = basketCode;
             Price = price;
@@ -18,9 +18,9 @@ namespace ProductSales.Domain.Models
             BasketItems = basketItems;
             BillingAddress = billingAddress;
             ShippingAddress = shippingAddress;
-
+            SellerCode = sellerCode;
         }
-        public CustomerPayment(Guid basketCode, decimal price, decimal paidPrice, Guid customerCode, List<BasketItem> basketItems, Address billingAddress, Address shippingAddress, PaymentCard paymentCard, string ıP)
+        public CustomerPayment(Guid basketCode, decimal price, decimal paidPrice, Guid customerCode, List<BasketItem> basketItems, Address billingAddress, Address shippingAddress, PaymentCard paymentCard, string ıP,Guid selllerCode)
         {
             BasketCode = basketCode;
             Price = price;
@@ -33,12 +33,16 @@ namespace ProductSales.Domain.Models
             ShippingAddress = shippingAddress;
             PaymentCard = paymentCard;
             IP = ıP;
+            SellerCode = selllerCode;
         }
 
 
 
         public Guid BasketCode { get; set; }
         public Guid CustomerCode { get; set; }
+        
+        public Guid SellerCode { get; set; }
+
         public decimal Price { get; set; }
         public decimal PaidPrice { get; set; }
         public string Curreny { get; set; }
