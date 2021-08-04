@@ -1,7 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using ProductSales.Domain.Events;
 using ProductSales.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ProductSales.Domain.Models
 {
@@ -19,8 +21,12 @@ namespace ProductSales.Domain.Models
             BillingAddress = billingAddress;
             ShippingAddress = shippingAddress;
             SellerCode = sellerCode;
+    
+
+
+            
         }
-        public CustomerPayment(Guid basketCode, decimal price, decimal paidPrice, Guid customerCode, List<BasketItem> basketItems, Address billingAddress, Address shippingAddress, PaymentCard paymentCard, string ıP,Guid selllerCode)
+        public CustomerPayment(Guid basketCode, decimal price, decimal paidPrice, Guid customerCode, List<BasketItem> basketItems, Address billingAddress, Address shippingAddress, PaymentCard paymentCard, string ıP, Guid selllerCode,Notification notification,string email,string phone)
         {
             BasketCode = basketCode;
             Price = price;
@@ -34,6 +40,19 @@ namespace ProductSales.Domain.Models
             PaymentCard = paymentCard;
             IP = ıP;
             SellerCode = selllerCode;
+
+            Notifications = notification;
+
+            StringBuilder message = new StringBuilder();
+
+            foreach (var item in BasketItems)
+            {
+
+                message.AppendLine($"{item.Name} ürününüzden 1 adet satılmıştır.");
+            }
+
+            this.AddDomainEvent(new PaymentReceivedEvent(message.ToString(), Notifications,email,phone));
+
         }
 
 
@@ -56,6 +75,8 @@ namespace ProductSales.Domain.Models
         public Address ShippingAddress { get; set; }
 
         public List<State> States { get; set; }
+        public Notification Notifications { get; set; }
+
     }
 
     public class BasketItem

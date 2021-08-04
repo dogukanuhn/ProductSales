@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProductSales.Application.Products.Commands
 {
-    public class AddProductCommand : INotification
+    public class AddProductCommand : IRequest<bool>
     {
         public string ProductName { get; set; }
         public short Qty { get; set; }
@@ -19,12 +19,9 @@ namespace ProductSales.Application.Products.Commands
 
         public string Unit { get; set; }
         public string CategoryName { get; set; }
-        public string SellerCode { get; set; }
-
-
 
     }
-    public class AddProductCommandHandler : INotificationHandler<AddProductCommand>
+    public class AddProductCommandHandler : IRequestHandler<AddProductCommand,bool>
     {
         private readonly IProductRepository _productRepository;
         private readonly ISellerRepository _sellerRepository;
@@ -36,8 +33,12 @@ namespace ProductSales.Application.Products.Commands
             _productRepository = productRepository;
             _sellerRepository = sellerRepository;
         }
-        public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
+            if (request.ProductName is null || request.CategoryName is null || request.Unit is null)
+                throw new ArgumentOutOfRangeException();
+
+
             var product = new Product(request.ProductName, request.Qty, request.CategoryName, request.Pricing, request.Unit);
 
 
@@ -46,6 +47,7 @@ namespace ProductSales.Application.Products.Commands
             if (result != null)
                 throw new Exception();
 
+            return true;
         }
     }
 }

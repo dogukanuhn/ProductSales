@@ -4,9 +4,9 @@ using ProductSales.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 
-namespace ProductSales.Application.Payments.Events
+namespace ProductSales.Application.Payments.Commands
 {
-    public class CreatePaymentNotification : INotification
+    public class StartPaymentCommand : IRequest<Unit>
     {
         public Guid BasketCode { get; set; }
         public Guid SellerCode { get; set; }

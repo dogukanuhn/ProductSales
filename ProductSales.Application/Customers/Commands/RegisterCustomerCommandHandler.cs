@@ -40,10 +40,9 @@ namespace ProductSales.Application.Customers.Commands
         {
             var hashedIdentity = _cipherService.Encrypt(request.IdentityNumber);
             HashService.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            var customter = new Customer(request.FirstName, request.LastName, request.Email, hashedIdentity,
+            var customer = new Customer(request.FirstName, request.LastName, request.Email, hashedIdentity,
                 request.Address, _customerUniqunessChecker, passwordSalt, passwordHash);
-
-            await _customerRepository.AddAsync(customter, cancellationToken);
+            await _customerRepository.AddAsync(customer, cancellationToken);
 
             return Unit.Task.Result;
 

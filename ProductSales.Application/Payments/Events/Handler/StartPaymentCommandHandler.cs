@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using ProductSales.Application.Constants;
-
+using ProductSales.Application.Payments.Commands;
 using ProductSales.Application.Services;
 
 using ProductSales.Domain.Abstract.Repositories;
@@ -15,54 +15,35 @@ using System.Threading.Tasks;
 
 namespace ProductSales.Application.Payments.Events.Handler
 {
-    public class StartPaymentCommandHandler : INotificationHandler<CreatePaymentNotification>
+    public class StartPaymentCommandHandler : IRequestHandler<StartPaymentCommand, Unit>
 
     {
         private readonly IPaymentService _paymentService;
         private readonly ISellerRepository _sellerRepository;
-        private readonly IBusService _busService;
+        
 
-        public StartPaymentCommandHandler(IPaymentService paymentService, ICustomerRepository customerRepository, ISellerRepository sellerRepository, IBusService busService)
+        public StartPaymentCommandHandler(IPaymentService paymentService, ISellerRepository sellerRepository)
         {
             _paymentService = paymentService;
             _sellerRepository = sellerRepository;
-            _busService = busService;
+          
         }
-        public async Task Handle(CreatePaymentNotification notification, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(StartPaymentCommand notification, CancellationToken cancellationToken)
         {
+            var seller = await _sellerRepository.GetAsync(x => x.Code == notification.SellerCode);
 
             CustomerPayment customerPayment = new(notification.BasketCode, notification.Price, notification.PaidPrice, notification.CustomerCode,
-                notification.BasketItems, notification.BillingAddress, notification.ShippingAddress, notification.PaymentCard, notification.IP, notification.SellerCode);
+                notification.BasketItems, notification.BillingAddress, notification.ShippingAddress, notification.PaymentCard, notification.IP, notification.SellerCode, seller.Notifications,seller.Email,seller.Phone);
+            
+            
+            
             await _paymentService.Create(customerPayment);
 
 
-            var seller = await _sellerRepository.GetAsync(x => x.Code == notification.SellerCode);
-
-            StringBuilder products = new StringBuilder();
-           
-
-            foreach (var item in notification.BasketItems)
-            {
-
-                products.AppendLine($"{item.Name} ürününüzden 1 adet satılmıştır.");
-            }
-            var message = new Message { MessageText = products.ToString() };
-
-            if (seller.Notifications.Email)
-            {
-                message.To = seller.Email;
-                _busService.PublishToMessageQueue("notification", $"notification.{NotificationTypes.EMAIL}", JsonSerializer.Serialize(message));
-
-            }
-            if (seller.Notifications.Sms)
-            {
-  
-                message.To = seller.Phone;
-                _busService.PublishToMessageQueue("notification", $"notification.{NotificationTypes.SMS}", JsonSerializer.Serialize(message));
-            }
-
-
             
+
+ 
+            return Unit.Task.Result;
 
         }
 

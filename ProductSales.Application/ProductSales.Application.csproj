@@ -25,7 +25,6 @@
   <ItemGroup>
     <Folder Include="Customers\Queries\" />
     <Folder Include="Exceptions\Seller\" />
-    <Folder Include="Payments\Commands\" />
     <Folder Include="Sellers\Queries\" />
   </ItemGroup>
 
