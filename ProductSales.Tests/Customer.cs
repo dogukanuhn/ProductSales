@@ -33,7 +33,7 @@ namespace ProductSales.Tests
         public async Task RegisterCustomer_ReturnUnit(string firstName, string lastName, string email, string identity, string password, string passwordAgain)
         {
   
-                var fake = new Mock<IMediator>();
+             
                 var repo = new Mock<ICustomerRepository>();
                 var service = new Mock<ICipherService>();
                 var rule = new Mock<ICustomerUniqunessChecker>();
@@ -49,7 +49,7 @@ namespace ProductSales.Tests
                 };
                 RegisterCustomerCommandHandler handler = new(repo.Object,service.Object, rule.Object);      
                 Unit x = await handler.Handle(command, new CancellationToken());
-
+            
                 Assert.Equal(Unit.Task.Result, x);
 
            

@@ -12,15 +12,6 @@ namespace ProductSales.Application.Validations.ProductValidation
             RuleFor(x => x.CategoryName).NotEmpty();
             RuleFor(x => x.Unit).NotEmpty();
 
-
-
-
-
-
-
-
-
-
         }
     }
 }

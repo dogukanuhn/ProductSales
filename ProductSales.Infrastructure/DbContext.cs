@@ -16,6 +16,7 @@ namespace ProductSales.Infrastructure
             var client = new MongoClient(this.settings.ConnectionString);
             Db = client.GetDatabase(this.settings.Database);
         }
+      
 
 
 

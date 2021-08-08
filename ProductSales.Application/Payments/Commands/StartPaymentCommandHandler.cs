@@ -13,7 +13,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProductSales.Application.Payments.Events.Handler
+namespace ProductSales.Application.Payments.Commands
 {
     public class StartPaymentCommandHandler : IRequestHandler<StartPaymentCommand, Unit>
 
@@ -34,14 +34,8 @@ namespace ProductSales.Application.Payments.Events.Handler
 
             CustomerPayment customerPayment = new(notification.BasketCode, notification.Price, notification.PaidPrice, notification.CustomerCode,
                 notification.BasketItems, notification.BillingAddress, notification.ShippingAddress, notification.PaymentCard, notification.IP, notification.SellerCode, seller.Notifications,seller.Email,seller.Phone);
-            
-            
-            
+
             await _paymentService.Create(customerPayment);
-
-
-            
-
  
             return Unit.Task.Result;
 
