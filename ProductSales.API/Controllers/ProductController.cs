@@ -26,9 +26,6 @@ namespace ProductSales.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _mediator.Send(new GetProductListQuery());
-
-
-
             return Ok(result);
         }
 
@@ -38,9 +35,7 @@ namespace ProductSales.API.Controllers
         public async Task<IActionResult> GetByName([FromQuery] GetProductByNameQuery query)
         {
             var result = await _mediator.Send(query);
-
             return Ok(result);
-
         }
 
         [HttpPost]
@@ -49,8 +44,6 @@ namespace ProductSales.API.Controllers
         public async Task<IActionResult> Add([FromBody] AddProductCommand command)
         {
             await _mediator.Send(command);
-
-
             return Created("Created", string.Empty);
         }
 
@@ -60,7 +53,6 @@ namespace ProductSales.API.Controllers
         public async Task<IActionResult> Delete([FromBody] DeleteProductCommand command)
         {
             await _mediator.Publish(command);
-
             return Ok();
         }
 
@@ -71,7 +63,6 @@ namespace ProductSales.API.Controllers
         public async Task<IActionResult> Updatea([FromBody] UpdateProductCommand command)
         {
             await _mediator.Publish(command);
-
             return Ok();
         }
 
